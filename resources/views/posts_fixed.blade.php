@@ -1,12 +1,32 @@
 @extends('layouts.main')
 @section('container')
-    <h1 class="mb-5">Blog Posts</h1>
+    <h1 class="mb-3 text-center">Blog Posts</h1>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-8">
+            <form action="/blog" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search by title..." name="search" value="{{ request('search') }}">
+                    <input type="text" class="form-control" placeholder="Search by author name..." name="author" value="{{ request('author') }}">
+                    <select class="form-select" name="category">
+                        <option value="">All Categories</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->name }}" {{ request('category') == $category->name ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-outline-danger" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     @if($posts->count())
         {{-- Newest post --}}
         @php
             $newest = $posts->first(); // Get the first post
-            $others = $posts->skip(1); // Skip the first post
+            $others = $posts->slice(1); // Get all posts except the first
         @endphp
 
         <div class="card mb-4">
