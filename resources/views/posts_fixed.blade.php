@@ -7,15 +7,6 @@
             <form action="/blog" method="GET">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Search by title..." name="search" value="{{ request('search') }}">
-                    <input type="text" class="form-control" placeholder="Search by author name..." name="author" value="{{ request('author') }}">
-                    <select class="form-select" name="category">
-                        <option value="">All Categories</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->name }}" {{ request('category') == $category->name ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
                     <button class="btn btn-outline-danger" type="submit">Search</button>
                 </div>
             </form>
@@ -37,7 +28,8 @@
                 <p class="card-text text-muted">
                     by 
                     @if($newest->author)
-                        <a href="/authors/{{ $newest->author->username }}" class="text-decoration-none">{{ $newest->author->name }}</a>
+                        <a href="/authors/{{ $newest->author->username }}" class="text-decoration-none">{{ $newest->author->name }}</a> 
+                        {{--author diambil dari relasi author di model Post untuk mendapatkan nama penulis--}}
                     @else
                         Unknown author
                     @endif
