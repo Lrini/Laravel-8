@@ -8,7 +8,7 @@
                 {{-- link authors name to their profile page --}}
                 by <a href="/authors/{{ $post->author->username }}" class="text-decoration-none">{{ $post->author->name }}</a> in 
                 {{-- link category name to their category page --}}
-                <a href="/categories/{{ $post->category->slug }}" class="text-decoration-none">{{ $post->category->name }}</a>
+                <a href="/blog?category={{ $post->category->slug }}" class="text-decoration-none">{{ $post->category->name }}</a>
             </p>
             <div class="card-text">
                 {!! $post->body !!}

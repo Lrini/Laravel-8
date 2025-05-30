@@ -33,5 +33,17 @@ class Post extends Model
             return $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('body', 'like', '%' . $search . '%');
         });
+
+        $query->when($filters['category'] ?? false, function ($query, $category) { // $category adalah kategori yang diberikan untuk mencari post dari variabel filter
+            return $query->whereHas('category', function ($query) use ($category) { // whereHas digunakan untuk memfilter query berdasarkan relasi yang ada pada model
+                $query->where('slug', $category); // mengambil data category berdasarkan slug
+            });
+        });
+
+        $query->when($filters['author'] ?? false, function ($query, $author) { // $author adalah author yang diberikan untuk mencari post dari variabel filter
+            return $query->whereHas('author', function ($query) use ($author) { // whereHas digunakan untuk memfilter query berdasarkan relasi yang ada pada model
+                $query->where('username', $author); // mengambil data author berdasarkan username
+            });
+        });
     }
 }

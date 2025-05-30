@@ -5,6 +5,12 @@
     <div class="row justify-content-center mb-3">
         <div class="col-md-8">
             <form action="/blog" method="GET">
+                @if (request('category')) {{--request('category') digunakan untuk mendapatkan nilai dari parameter category di URL--}}
+                    <input type="hidden" name="category" value="{{ request('category') }}"> {{--hidden input untuk menyimpan nilai category yang dipilih--}}
+                @endif
+                @if (request('author')) {{--request('author') digunakan untuk mendapatkan nilai dari parameter author di URL--}}
+                    <input type="hidden" name="author" value="{{ request('author') }}"> {{--hidden input untuk menyimpan nilai author yang dipilih--}}
+                @endif
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Search by title..." name="search" value="{{ request('search') }}">
                     <button class="btn btn-outline-danger" type="submit">Search</button>
@@ -28,14 +34,14 @@
                 <p class="card-text text-muted">
                     by 
                     @if($newest->author)
-                        <a href="/authors/{{ $newest->author->username }}" class="text-decoration-none">{{ $newest->author->name }}</a> 
+                        <a href="/blog?author={{ $newest->author->username }}" class="text-decoration-none">{{ $newest->author->name }}</a> 
                         {{--author diambil dari relasi author di model Post untuk mendapatkan nama penulis--}}
                     @else
                         Unknown author
                     @endif
                     in 
                     @if($newest->category)
-                        <a href="/categories/{{ $newest->category->slug }}" class="text-decoration-none">{{ $newest->category->name }}</a>
+                        <a href="/blog?category={{ $newest->category->slug }}" class="text-decoration-none">{{ $newest->category->name }}</a>
                     @else
                         Uncategorized
                     @endif
@@ -57,13 +63,13 @@
                             <p class="card-text text-muted">
                                 by 
                                 @if($post->author)
-                                    <a href="/authors/{{ $post->author->username }}" class="text-decoration-none">{{ $post->author->name }}</a>
+                                    <a href="/blog?author={{ $post->author->username }}" class="text-decoration-none">{{ $post->author->name }}</a>
                                 @else
                                     Unknown author
                                 @endif
                                 in 
                                 @if($post->category)
-                                    <a href="/categories/{{ $post->category->slug }}" class="text-decoration-none">{{ $post->category->name }}</a>
+                                    <a href="/blog?category={{ $post->category->slug }}" class="text-decoration-none">{{ $post->category->name }}</a>
                                 @else
                                     Uncategorized
                                 @endif
