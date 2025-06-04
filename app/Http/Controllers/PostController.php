@@ -14,7 +14,7 @@ class PostController extends Controller
         // ambil data dari model Post
         return view('posts_fixed',[
             "title" => "All Posts",
-            "posts" => Post::latest()->filter(request(['search','category','author']))->get() // ambil data dari model Post, latest() untuk mengurutkan data berdasarkan tanggal terbaru, filter() untuk mencari data berdasarkan keyword
+            "posts" => Post::latest()->filter(request(['search','category','author']))-> paginate(5)->withQueryString() // ambil data dari model Post, latest() untuk mengurutkan data berdasarkan tanggal terbaru, filter() untuk mencari data berdasarkan keyword
         ]);
     }
     // fungsi untuk menampilkan data post berdasarkan id
