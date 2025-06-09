@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,6 @@ Route::get('/authors/{author:username}', function (User $author) { // untuk hala
         'posts' => $author->posts->load('category','author'), // load relationship dari post ke category dan author
     ]);
 });
+
+
+Route::get('/login',[LoginController::class,'index']);
