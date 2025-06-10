@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\registerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +63,4 @@ Route::get('/authors/{author:username}', function (User $author) { // untuk hala
 
 
 Route::get('/login',[LoginController::class,'index']);
+Route::get('/register',[registerController::class,'index']);
