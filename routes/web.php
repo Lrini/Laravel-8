@@ -64,3 +64,4 @@ Route::get('/authors/{author:username}', function (User $author) { // untuk hala
 
 Route::get('/login',[LoginController::class,'index']);
 Route::get('/register',[registerController::class,'index']);
+Route::post('/register',[registerController::class,'store']);
