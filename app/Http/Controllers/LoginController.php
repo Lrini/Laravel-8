@@ -21,7 +21,7 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials)){ // jika autentikasi berhasil, auth::attempt akan mengembalikan true, fungsi auth adalah untuk mengecek apakah user sudah login atau belum
             $request->session()->regenerate();
-            return redirect()->intended('/'); // redirect ke halaman yang diminta sebelumnya, intended akan mengarahkan ke halaman yang diminta sebelum login, 
+            return redirect()->intended('/dashboard'); // redirect ke halaman yang diminta sebelumnya, intended akan mengarahkan ke halaman yang diminta sebelum login, 
             //jika tidak ada halaman yang diminta sebelumnya, maka akan diarahkan ke halaman home
         }
 

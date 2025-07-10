@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
@@ -62,9 +63,11 @@ Route::get('/authors/{author:username}', function (User $author) { // untuk hala
 });
 
 
-Route::get('/login',[LoginController::class,'index']); // untuk halaman login
+Route::get('/login',[LoginController::class,'index'])->middleware('guest'); // untuk halaman login
 Route::post('/login',[LoginController::class,'authenticate']);// untuk proses autentikasi login
 
 
 Route::get('/register',[registerController::class,'index']);
 Route::post('/register',[registerController::class,'store']);
+
+Route::get('/dashboard',[DashboardController::class,'index']);
