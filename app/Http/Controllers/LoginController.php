@@ -28,4 +28,14 @@ class LoginController extends Controller
         return back()->with('loginError','Login failed!'); // jika gagal login, kembali ke halaman login dengan pesan error
     }
 
+    public function logout(){
+        Auth::logout(); // untuk logout user, fungsi ini akan menghapus session user yang sedang login
+        // Setelah logout, kita perlu menghapus session dan token CSRF untuk keamanan
+        // Ini akan memastikan bahwa sesi pengguna tidak dapat digunakan lagi setelah logout.
+        // Kita juga akan mengarahkan pengguna kembali ke halaman login.
+        request()->session()->invalidate();//
+        request()->session()->regenerateToken();// untuk menghindari serangan CSRF (Cross-Site Request Forgery)
+        return redirect('/login');// mengarahkan ke halaman login setelah logout
+    }
+
 }

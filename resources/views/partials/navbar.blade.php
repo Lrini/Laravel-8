@@ -29,7 +29,7 @@
                           <li><hr class="dropdown-divider"></li>
                           <li>
                             <form action="/logout" method="post">
-                            @csrf {{-- csrf untuk menghindari serangan CSRF --}}
+                                @csrf {{-- csrf untuk menghindari serangan CSRF --}}
                               <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-in-right"></i>Logout</button>
                             </form>
                           </li>

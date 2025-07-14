@@ -63,11 +63,12 @@ Route::get('/authors/{author:username}', function (User $author) { // untuk hala
 });
 
 
-Route::get('/login',[LoginController::class,'index'])->middleware('guest'); // untuk halaman login
+Route::get('/login',[LoginController::class,'index'])->name('login')->middleware('guest'); // untuk halaman login
 Route::post('/login',[LoginController::class,'authenticate']);// untuk proses autentikasi login
+Route::post('/logout',[LoginController::class,'logout']);
 
 
-Route::get('/register',[registerController::class,'index']);
+Route::get('/register',[registerController::class,'index'])->middleware('guest'); // untuk halaman register, hanya bisa diakses oleh user yang belum login
 Route::post('/register',[registerController::class,'store']);
 
-Route::get('/dashboard',[DashboardController::class,'index']);
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth'); // untuk halaman dashboard, hanya bisa diakses oleh user yang sudah login
