@@ -71,4 +71,6 @@ Route::post('/logout',[LoginController::class,'logout']);
 Route::get('/register',[registerController::class,'index'])->middleware('guest'); // untuk halaman register, hanya bisa diakses oleh user yang belum login
 Route::post('/register',[registerController::class,'store']);
 
-Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth'); // untuk halaman dashboard, hanya bisa diakses oleh user yang sudah login
+Route::get('/dashboard',function(){
+    return view('dashboard.index');
+})->middleware('auth'); // untuk halaman dashboard, hanya bisa diakses oleh user yang sudah login
