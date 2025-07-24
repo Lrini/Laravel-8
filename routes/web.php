@@ -75,4 +75,5 @@ Route::get('/dashboard',function(){
     return view('dashboard.index');
 })->middleware('auth'); // untuk halaman dashboard, hanya bisa diakses oleh user yang sudah login
 
+
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth'); // untuk resource posts di dashboard, hanya bisa diakses oleh user yang sudah login

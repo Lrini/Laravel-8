@@ -46,4 +46,9 @@ class Post extends Model
             });
         });
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug'; //menggunakan slug sebagai key untuk route
+    }
 }
