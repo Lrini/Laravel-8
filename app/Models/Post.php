@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     //protected $fillable = ['title','category_id','slug','excerpt','body'];
     protected $guarded =['id']; //protected id mengindikasikan bahwa id hanya bisa diakases di halaman post dan turunannya(subclass)
@@ -50,5 +52,13 @@ class Post extends Model
     public function getRouteKeyName()
     {
         return 'slug'; //menggunakan slug sebagai key untuk route
+    }
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
