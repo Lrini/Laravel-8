@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardPostController extends Controller
@@ -17,7 +18,8 @@ class DashboardPostController extends Controller
     public function index()
     {
         return view('dashboard.posts.index',[
-            'posts' => Post::where('user_id', auth()->user()->id)->get(),
+            'posts' => Post::where('user_id', auth()->user()->id)->get(), // ambil semua post yang dibuat oleh user yang sedang login
+            'categories' => Category::all(), // ambil semua kategori
             'title' => 'My Posts'
         ])->with('success', 'Post retrieved successfully'
     );
@@ -31,7 +33,7 @@ class DashboardPostController extends Controller
     public function create()
     {
         return view('dashboard.posts.create',[
-            'categories' => Category::all()
+            'categories' => Category::all()// munculkan semua kategori
         ]);
     }
 
@@ -43,7 +45,24 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // Validasi inputan dari form
+        // 'title' harus diisi, maksimal 255 karakter
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts',
+            'category_id' => 'required',
+            'body' => 'required'
+        ]);
+        // Tambahkan user_id ke dalam data yang akan disimpan
+        // ambil user yang sedang login dan simpan id-nya   
+        // 'excerpt' diambil dari body, maksimal 200 karakter
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
+
+        Post::create($validatedData); // simpan data post ke database
+        // Redirect ke halaman posts dengan pesan sukses
+
+        return redirect('/dashboard/posts')->with('success', 'New post created successfully');
     }
 
     /**
