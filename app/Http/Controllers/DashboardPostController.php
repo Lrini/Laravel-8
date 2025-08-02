@@ -60,9 +60,10 @@ class DashboardPostController extends Controller
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
 
         Post::create($validatedData); // simpan data post ke database
-        // Redirect ke halaman posts dengan pesan sukses
 
-        return redirect('/dashboard/posts')->with('success', 'New post created successfully');
+        // Redirect ke halaman posts dengan pesan sukses
+        return redirect('/dashboard/posts')->with('success', 'Post has been created successfully');
+       
     }
 
     /**
@@ -87,7 +88,11 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        
+        return view('dashboard.posts.edit',[
+            'post' => $post,
+            'categories' => Category::all()// munculkan semua kategori
+        ]);
     }
 
     /**
@@ -99,7 +104,27 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        // Validasi inputan dari form
+        // 'title' harus diisi, maksimal 255 karakter
+        // 'slug' harus unik, kecuali jika slug tidak berubah   
+         $rules =[
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+        // Jika slug tidak berubah, maka tidak perlu validasi unik
+        if ($request->slug != $post->slug) {
+            $rules['slug'] = 'required|unique:posts';
+        }
+        $validatedData = $request->validate($rules);
+         $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
+
+        Post::where('id', $post->id)->update($validatedData); // simpan data post ke database
+
+        // Redirect ke halaman posts dengan pesan sukses
+        return redirect('/dashboard/posts')->with('success', 'Post has been updated successfully');
     }
 
     /**
@@ -110,7 +135,10 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+         Post::destroy($post->id); // simpan data post ke database
+        // Redirect ke halaman posts dengan pesan sukses
+
+        return redirect('/dashboard/posts')->with('success', 'Post has been deleted successfully');
     }
 
     public function checkslug(Request $request)

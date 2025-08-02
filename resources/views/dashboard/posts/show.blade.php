@@ -8,8 +8,12 @@
                     {!! $post->body !!}
                 </div>
                 <a href="/dashboard/posts" class="btn btn-success mt-3"><span data-feather="arrow-left"></span> Back to posts</a>
-                <a href="/blog" class="btn btn-warning mt-3"><span data-feather="edit"></span >Edit</a>
-                <a href="/blog" class="btn btn-danger mt-3"><span data-feather="x-circle"></span> Delete</a>
+                <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning mt-3"><span data-feather="edit"></span >Edit</a>
+                 <form action="/dashboard/posts/{{ $post->slug }}" method="post" class="d-inline">
+                      @method('delete')
+                      @csrf
+                      <button class="btn btn-danger mt-3" onclick="return confirm('Are you sure')"><span data-feather="x-circle"></span>Delete</button>
+                    </form>
             </div>
         </div>
 </div>
