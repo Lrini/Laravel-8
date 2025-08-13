@@ -3,6 +3,7 @@
 <div class="container">
     <div class="card mb-4">
             <div class="card-body">
+                <img src="{{ asset('storage/'.$post->image) }}" alt="{{ $post->category->name }}" class="img-fluid mb-3">
                 <h2 class="card-title">{{ $post->title }}</h2>
                 <div class="card-text">
                     {!! $post->body !!}

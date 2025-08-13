@@ -28,6 +28,7 @@
 
         <div class="card mb-4">
             <div class="card-body">
+                 <img src="{{ asset('storage/'.$newest->image) }}" alt="{{ $newest->category->name }}" class="img-fluid mb-3">
                 <h2 class="card-title display-4">
                     <a href="/posts/{{ $newest->slug }}" class="text-decoration-none">{{ $newest->title }}</a>
                 </h2>
@@ -57,6 +58,7 @@
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
+                             <img src="{{ asset('storage/'.$post->image) }}" alt="{{ $post->category->name }}" class="img-fluid mb-3">
                             <h2 class="card-title">
                                 <a href="/posts/{{ $post->slug }}" class="text-decoration-none">{{ $post->title }}</a>
                             </h2>

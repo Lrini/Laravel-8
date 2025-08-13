@@ -45,14 +45,19 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
+       // return $request->file('image')->store('post-images'); // simpan file gambar ke folder post-images
         // Validasi inputan dari form
         // 'title' harus diisi, maksimal 255 karakter
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
+            'image' => 'image|file|max:1024', // maksimal ukuran file
             'body' => 'required'
         ]);
+        if ($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('post-images'); // simpan file gambar ke folder post-images
+        }
         // Tambahkan user_id ke dalam data yang akan disimpan
         // ambil user yang sedang login dan simpan id-nya   
         // 'excerpt' diambil dari body, maksimal 200 karakter
