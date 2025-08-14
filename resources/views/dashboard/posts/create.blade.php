@@ -39,7 +39,8 @@
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">Post Image</label>
-        <input class="form-control  @error('image') is-invalid  @enderror" type="file" id="image" name="image">
+        <img class="img-preview img-fluid mb-3 col-sm-5">
+        <input class="form-control  @error('image') is-invalid  @enderror" type="file" id="image" name="image" onchange="previewImage(event)">
          @error('image')
           <div class="invalid-feedback">
             {{ $message }}
@@ -71,6 +72,22 @@
         e.preventDefault();
         alert("File not allowed!");
     });
+
+    function previewImage(event) {
+        const image = document.querySelector('#image');
+        const imgPreview = document.querySelector('.img-preview');
+
+        const file = image.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            imgPreview.src = e.target.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 
 </script>
 @endsection
