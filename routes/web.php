@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\registerController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardPostController;
 
 /*
@@ -76,4 +77,6 @@ Route::get('/dashboard',function(){
 })->middleware('auth'); // untuk halaman dashboard, hanya bisa diakses oleh user yang sudah login
 
 Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkslug'])->middleware('auth'); // untuk mengecek slug, hanya bisa diakses oleh user yang sudah login
-Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth'); // untuk resource posts di dashboard, hanya bisa diakses oleh user yang sudah login
+Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth'); // untuk resource posts di dashboard, hanya bisa diakses oleh user yang sudah login digunakan untuk create, read, update, dan delete
+
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('auth'); // untuk resource categories di dashboard, hanya bisa diakses oleh admin, digunakan untuk create, read, update, dan delete
