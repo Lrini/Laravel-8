@@ -79,4 +79,4 @@ Route::get('/dashboard',function(){
 Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkslug'])->middleware('auth'); // untuk mengecek slug, hanya bisa diakses oleh user yang sudah login
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth'); // untuk resource posts di dashboard, hanya bisa diakses oleh user yang sudah login digunakan untuk create, read, update, dan delete
 
-Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('auth'); // untuk resource categories di dashboard, hanya bisa diakses oleh admin, digunakan untuk create, read, update, dan delete
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('isAdmin'); // untuk resource categories di dashboard, hanya bisa diakses oleh admin, digunakan untuk create, read, update, dan delete

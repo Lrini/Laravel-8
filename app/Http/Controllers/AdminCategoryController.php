@@ -14,6 +14,7 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('admin'); // menggunakan gate untuk mengecek apakah user adalah admin
         return view('dashboard.categories.index',[
             'categories' => Category::all()
         ]);
